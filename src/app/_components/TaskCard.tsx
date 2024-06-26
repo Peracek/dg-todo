@@ -1,12 +1,12 @@
-import { Button } from "@headlessui/react";
-import { Task } from "../types";
+import { Button } from '@headlessui/react'
+import { Task } from '../types'
 
 export const TaskCard = ({
   task,
   onClick,
 }: {
-  task: Task;
-  onClick: () => void;
+  task: Task
+  onClick: () => void
 }) => (
   <Button
     onClick={onClick}
@@ -17,4 +17,4 @@ export const TaskCard = ({
     </h5>
     <p className="font-normal text-gray-700 text-sm">{task.description}</p>
   </Button>
-);
+)

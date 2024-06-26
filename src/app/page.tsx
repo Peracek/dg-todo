@@ -1,25 +1,25 @@
-"use client";
+'use client'
 
-import { TaskCard } from "./_components/TaskCard";
+import { TaskCard } from './_components/TaskCard'
 import {
   Description,
   Dialog,
   DialogPanel,
   DialogTitle,
   Button,
-} from "@headlessui/react";
-import { useState } from "react";
-import { tasks } from "./dummyTasks";
-import { Task } from "./types";
+} from '@headlessui/react'
+import { useState } from 'react'
+import { tasks } from './dummyTasks'
+import { Task } from './types'
 
 const TaskDialog = ({
   task,
   onClose,
 }: {
-  task?: Task;
-  onClose: (value: boolean) => void;
+  task?: Task
+  onClose: (value: boolean) => void
 }) => {
-  const open = !!task;
+  const open = !!task
 
   return (
     <>
@@ -39,16 +39,16 @@ const TaskDialog = ({
         )}
       </Dialog>
     </>
-  );
-};
+  )
+}
 
 const NewTaskBar = () => {
-  return <div>vytvorit poznamku</div>;
-};
+  return <div>vytvorit poznamku</div>
+}
 
 export default function Home() {
-  const [openedTask, setOpenedTask] = useState<Task | undefined>();
-  const closeDialog = () => setOpenedTask(undefined);
+  const [openedTask, setOpenedTask] = useState<Task | undefined>()
+  const closeDialog = () => setOpenedTask(undefined)
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -65,5 +65,5 @@ export default function Home() {
 
       <TaskDialog task={openedTask} onClose={closeDialog} />
     </main>
-  );
+  )
 }
