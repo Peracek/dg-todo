@@ -31,3 +31,15 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer components {
+  .card {
+    @apply px-4;
+    @apply py-2;
+    @apply bg-white;
+    @apply border;
+    @apply border-gray-200;
+    @apply rounded-lg;
+    @apply shadow;
+  }
+}

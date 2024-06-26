@@ -8,10 +8,7 @@ export const TaskCard = ({
   task: Task
   onClick: () => void
 }) => (
-  <Button
-    onClick={onClick}
-    className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow"
-  >
+  <Button onClick={onClick} className="block max-w-sm card">
     <h5 className="mb-2 text-lg font-bolder tracking-tight text-gray-900">
       {task.title}
     </h5>
