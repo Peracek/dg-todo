@@ -4,9 +4,11 @@ import { Task } from '@prisma/client'
 import { useState } from 'react'
 import { TaskCard } from './TaskCard'
 import { TaskModal } from './TaskModal'
+import { useTasks } from '@/db/Store'
 
-export const TaskList = ({ tasks }: { tasks: Task[] }) => {
+export const TaskList = () => {
   const [openedTask, setOpenedTask] = useState<Task | undefined>()
+  const { tasks } = useTasks()
   const closeDialog = () => setOpenedTask(undefined)
 
   return (
