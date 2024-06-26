@@ -1,6 +1,6 @@
 "use client";
 
-import { Task } from "./_components/Task";
+import { TaskCard } from "./_components/TaskCard";
 import {
   Description,
   Dialog,
@@ -10,57 +10,60 @@ import {
 } from "@headlessui/react";
 import { useState } from "react";
 import { tasks } from "./dummyTasks";
+import { Task } from "./types";
 
 const TaskDialog = ({
-  open,
+  task,
   onClose,
 }: {
-  open: boolean;
+  task?: Task;
   onClose: (value: boolean) => void;
 }) => {
+  const open = !!task;
+
   return (
     <>
       <Dialog open={open} onClose={onClose} className="relative z-50">
-        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-          <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
-            <DialogTitle className="font-bold">Deactivate account</DialogTitle>
-            <Description>
-              This will permanently deactivate your account
-            </Description>
-            <p>
-              Are you sure you want to deactivate your account? All of your data
-              will be permanently removed.
-            </p>
-            <div className="flex gap-4">
-              {/* <button onClick={() => setIsOpen(false)}>Cancel</button>
+        {task && (
+          <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+            <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+              <DialogTitle className="font-bold">{task.title}</DialogTitle>
+              <Description>{task.description}</Description>
+              {/* <p>{activeTask.description}</p> */}
+              <div className="flex gap-4">
+                {/* <button onClick={() => setIsOpen(false)}>Cancel</button>
               <button onClick={() => setIsOpen(false)}>Deactivate</button> */}
-            </div>
-          </DialogPanel>
-        </div>
+              </div>
+            </DialogPanel>
+          </div>
+        )}
       </Dialog>
     </>
   );
 };
 
+const NewTaskBar = () => {
+  return <div>vytvorit poznamku</div>;
+};
+
 export default function Home() {
-  const [dialogIsOpen, setDialogIsOpen] = useState(false);
+  const [openedTask, setOpenedTask] = useState<Task | undefined>();
+  const closeDialog = () => setOpenedTask(undefined);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <NewTaskBar />
       <div className="max-w-xl">
         {tasks.map((task) => (
-          <Task
+          <TaskCard
             task={task}
             key={task.id}
-            onClick={() => setDialogIsOpen(true)}
+            onClick={() => setOpenedTask(task)}
           />
         ))}
       </div>
-      <Button onClick={() => setDialogIsOpen(true)}>add task</Button>
-      <TaskDialog
-        open={dialogIsOpen}
-        onClose={() => setDialogIsOpen(!dialogIsOpen)}
-      />
+
+      <TaskDialog task={openedTask} onClose={closeDialog} />
     </main>
   );
 }

@@ -1,12 +1,7 @@
 import { Button } from "@headlessui/react";
+import { Task } from "../types";
 
-type Task = {
-  id: number;
-  title: string;
-  description: string;
-};
-
-export const Task = ({
+export const TaskCard = ({
   task,
   onClick,
 }: {
