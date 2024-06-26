@@ -1,5 +1,5 @@
 import { Button } from '@headlessui/react'
-import { Task } from '../types'
+import { Task } from '@prisma/client'
 
 export const TaskCard = ({
   task,
