@@ -11,6 +11,8 @@ import {
 import { useState } from 'react'
 import { tasks } from './dummyTasks'
 import { Task } from './types'
+import { signIn } from '@/auth'
+import { SignIn, signInAction } from './_components/SignInButton'
 
 const TaskDialog = ({
   task,
@@ -52,6 +54,9 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <form action={signInAction}>
+        <button type="submit">Signin with Github</button>
+      </form>
       <NewTaskBar />
       <div className="max-w-xl">
         {tasks.map((task) => (
