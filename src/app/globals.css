@@ -42,4 +42,8 @@ body {
     @apply rounded-lg;
     @apply shadow;
   }
+
+  .card-hover {
+    @apply shadow-lg;
+  }
 }

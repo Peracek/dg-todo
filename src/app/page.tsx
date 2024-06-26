@@ -43,7 +43,7 @@ const TaskDialog = ({
 }
 
 const NewTaskBar = () => {
-  return <div>vytvorit poznamku</div>
+  return <div className="card card-hover">vytvorit poznamku</div>
 }
 
 export default function Home() {
