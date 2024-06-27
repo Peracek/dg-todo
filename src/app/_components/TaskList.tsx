@@ -13,7 +13,7 @@ export const TaskList = () => {
 
   return (
     <>
-      <div className="w-56 flex flex-col items-stretch">
+      <div className="w-56 flex flex-col items-stretch gap-1">
         {tasks.map((task) => (
           <TaskCard
             task={task}

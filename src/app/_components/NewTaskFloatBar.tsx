@@ -35,7 +35,7 @@ export const NewTaskFloatBar = ({ userId }: { userId: string }) => {
 
   return (
     <form
-      className="card card-hover flex flex-col"
+      className="card card-hover flex flex-col my-8"
       onSubmit={handleSubmit(handleAdd)}
       onKeyDown={handleKeyDown}
       onFocus={() => setIsFocused(true)}
