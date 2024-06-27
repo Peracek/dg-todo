@@ -25,6 +25,7 @@ export const StoreContextProvider = (
 
   useEffect(() => {
     startBackOnlineListener(notSyncedTasks.current)
+    startUnloadListener(notSyncedTasks.current)
   }, [])
 
   const addTask = useCallback(
@@ -32,7 +33,6 @@ export const StoreContextProvider = (
       setTasks([...tasks, taskToAdd])
       // TODO: update db
       try {
-        // FIXME: update ID
         await addTaskToServer(taskToAdd)
       } catch (e) {
         if (!navigator.onLine) {
@@ -59,18 +59,21 @@ export const StoreContextProvider = (
 
 export const useTasks = () => {
   const { tasks, addTask } = useContext(StoreContext)
-  // FIXME: check if used in Context context :)
   return { tasks, addTask }
 }
 
 const startBackOnlineListener = (notSyncedTasks: Task[]) => {
-  window.addEventListener('online', () => {
-    // FIXME: create bulk add tasks
-    // addTasksToServer(notSyncedTasks)
-    Promise.all(notSyncedTasks.map((task) => addTaskToServer(task))).then(
-      () => {
-        alert('synced')
-      }
-    )
+  window.addEventListener('online', async () => {
+    await addTaskToServer(notSyncedTasks)
+    notSyncedTasks = []
+  })
+}
+
+const startUnloadListener = (notSyncedTasks: Task[]) => {
+  window.addEventListener('beforeunload', (event) => {
+    const anyPendingTasks = notSyncedTasks.length > 0
+    if (anyPendingTasks) {
+      event.returnValue = `Are you sure you want to leave?`
+    }
   })
 }

@@ -3,7 +3,7 @@ import { NewTaskFloatBar } from './_components/NewTaskFloatBar'
 import { SignInButton } from './_components/SignInButton'
 import { TaskList } from './_components/TaskList'
 import prisma from '../db/prismaClient'
-import { StoreContextProvider } from '@/db/Store'
+import { StoreContextProvider } from '@/db/StoreContext'
 import assert from 'assert'
 import { OfflineNotificationBar } from './_components/OfflineNotificationBar'
 
