@@ -1,23 +1,17 @@
 import { auth } from '@/auth'
-import { NewTaskFloatBar } from './_components/NewTaskFloatBar'
-import { SignOutButton } from './_components/SignOutButton'
-import { TaskList } from './_components/TaskList'
-import prisma from '../db/prismaClient'
 import { StoreContextProvider } from '@/db/StoreContext'
 import assert from 'assert'
+import prisma from '../db/prismaClient'
+import { NewTaskFloatBar } from './_components/NewTaskFloatBar'
 import { OfflineNotificationBar } from './_components/OfflineNotificationBar'
+import { TaskList } from './_components/TaskList'
+import { UserInfo } from './_components/UserInfo'
 
 const getUser = async () => {
   const session = await auth()
-  const anonymouse = session === null
-
-  if (anonymouse) {
-    return { anonymouse, userId: 'FIXME: local storage stored id' }
-  }
-
-  const email = session.user?.email
+  const email = session?.user?.email
   assert(email, 'Email has to be returned from auth provider')
-  return { anonymouse, userId: email }
+  return { userId: email }
 }
 
 const getTasks = async (userId: string | null) =>
@@ -34,9 +28,8 @@ export default async function Home() {
   return (
     <StoreContextProvider tasks={tasks}>
       <OfflineNotificationBar />
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <SignOutButton />
-        <div>hello {user.userId}</div>
+      <main className="flex min-h-screen flex-col items-center justify-between p-4">
+        <UserInfo userId={user.userId} />
         <NewTaskFloatBar userId={user.userId} />
         <TaskList />
       </main>
