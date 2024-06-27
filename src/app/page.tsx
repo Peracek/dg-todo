@@ -5,6 +5,7 @@ import { TaskList } from './_components/TaskList'
 import prisma from '../db/prismaClient'
 import { StoreContextProvider } from '@/db/Store'
 import assert from 'assert'
+import { OfflineNotificationBar } from './_components/OfflineNotificationBar'
 
 const getUser = async () => {
   const session = await auth()
@@ -32,6 +33,7 @@ export default async function Home() {
 
   return (
     <StoreContextProvider tasks={tasks}>
+      <OfflineNotificationBar />
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <SignInButton />
         <div>hello {user.userId}</div>
