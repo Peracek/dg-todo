@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 
 type Inputs = { title: string }
 
-export const NewTaskFloatBar = () => {
+export const NewTaskFloatBar = ({ userId }: { userId: string }) => {
   const { register, handleSubmit, reset } = useForm<Inputs>()
   const { addTask } = useTasks()
   const handleAdd: SubmitHandler<Inputs> = (data) => {
@@ -14,7 +14,7 @@ export const NewTaskFloatBar = () => {
       id: crypto.randomUUID(),
       title: data.title,
       description: 'test description',
-      authorId: null,
+      authorId: userId,
     })
     reset()
   }

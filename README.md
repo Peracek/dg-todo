@@ -9,3 +9,5 @@
 ## Missing features
 
 ## Known issues
+
+No pagination
