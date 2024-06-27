@@ -8,10 +8,14 @@ export const TaskCard = ({
   task: Task
   onClick: () => void
 }) => (
-  <Button onClick={onClick} className="block max-w-sm card hover:card-hover">
+  <div
+    role="button"
+    onClick={onClick}
+    className="block max-w-sm card hover:card-hover"
+  >
     <h5 className="mb-2 text-lg font-bolder tracking-tight text-gray-900">
       {task.title}
     </h5>
     <p className="font-normal text-gray-700 text-sm">{task.description}</p>
-  </Button>
+  </div>
 )

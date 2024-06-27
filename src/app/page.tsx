@@ -1,6 +1,6 @@
 import { auth } from '@/auth'
 import { NewTaskFloatBar } from './_components/NewTaskFloatBar'
-import { SignInButton } from './_components/SignInButton'
+import { SignOutButton } from './_components/SignOutButton'
 import { TaskList } from './_components/TaskList'
 import prisma from '../db/prismaClient'
 import { StoreContextProvider } from '@/db/StoreContext'
@@ -35,12 +35,10 @@ export default async function Home() {
     <StoreContextProvider tasks={tasks}>
       <OfflineNotificationBar />
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <SignInButton />
+        <SignOutButton />
         <div>hello {user.userId}</div>
         <NewTaskFloatBar userId={user.userId} />
-        <div className="max-w-xl">
-          <TaskList />
-        </div>
+        <TaskList />
       </main>
     </StoreContextProvider>
   )

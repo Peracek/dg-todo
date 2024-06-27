@@ -13,7 +13,7 @@ export const TaskList = () => {
 
   return (
     <>
-      <div className="max-w-xl">
+      <div className="w-56 flex flex-col items-stretch">
         {tasks.map((task) => (
           <TaskCard
             task={task}
