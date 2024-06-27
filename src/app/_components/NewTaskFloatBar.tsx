@@ -11,7 +11,7 @@ export const NewTaskFloatBar = () => {
       <Button
         onClick={() =>
           addTask({
-            id: 'test',
+            id: crypto.randomUUID(),
             title: 'test title',
             description: 'test description',
             authorId: null,
