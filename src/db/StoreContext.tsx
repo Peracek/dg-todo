@@ -91,7 +91,7 @@ export const StoreContextProvider = (
 export const useTasks = () => useContext(StoreContext)
 
 const startBackOnlineListener = (notSyncedTasks: Task[]) => {
-  window.addEventListener('online', async () => {
+  window.ononline = async () => {
     if (notSyncedTasks.length > 0) {
       await syncTasksToServer(notSyncedTasks)
       // FIXME: no good, i cant change reference
@@ -100,10 +100,11 @@ const startBackOnlineListener = (notSyncedTasks: Task[]) => {
         `You're back online! All the changes you made are now safe.`
       )
     }
-  })
+  }
 }
 
 const startUnloadListener = (notSyncedTasks: Task[]) => {
+  // FIXME: window.onbeforeunload
   window.addEventListener('beforeunload', (event) => {
     const anyPendingTasks = notSyncedTasks.length > 0
     if (anyPendingTasks) {
