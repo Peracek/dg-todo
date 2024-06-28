@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 type Inputs = { title: string; description: string }
 
-export const NewTaskFloatBar = ({ userId }: { userId: string }) => {
+export const CreateTaskBar = ({ userId }: { userId: string }) => {
   const [isFocused, setIsFocused] = useState(false)
   const { register, handleSubmit, reset, formState } = useForm<Inputs>({
     defaultValues: { title: '', description: '' },

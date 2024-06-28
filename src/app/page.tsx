@@ -2,7 +2,7 @@ import { auth } from '@/auth'
 import { StoreContextProvider } from '@/db/StoreContext'
 import assert from 'assert'
 import prisma from '../db/prismaClient'
-import { NewTaskFloatBar } from './_components/NewTaskFloatBar'
+import { CreateTaskBar } from './_components/CreateTaskBar'
 import { OfflineNotificationBar } from './_components/OfflineNotificationBar'
 import { TaskList } from './_components/TaskList'
 import { UserInfo } from './_components/UserInfo'
@@ -30,7 +30,7 @@ export default async function Home() {
       <OfflineNotificationBar />
       <main className="flex min-h-screen flex-col items-center p-4">
         <UserInfo userId={user.userId} />
-        <NewTaskFloatBar userId={user.userId} />
+        <CreateTaskBar userId={user.userId} />
         <TaskList />
       </main>
     </StoreContextProvider>

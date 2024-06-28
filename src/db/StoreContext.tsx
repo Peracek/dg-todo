@@ -11,11 +11,13 @@ import {
   useState,
 } from 'react'
 import { addTaskToServer } from './addTaskToServer'
+import { updateTaskToServer } from './updateTaskToServer'
 
 const StoreContext = createContext<{
   tasks: Task[]
   addTask: (task: Task) => void
-}>({ tasks: [], addTask: () => {} })
+  updateTask: (task: Task) => void
+}>({ tasks: [], addTask: () => {}, updateTask: () => {} })
 
 export const StoreContextProvider = (
   props: PropsWithChildren<{ tasks: Task[] }>
@@ -50,16 +52,28 @@ export const StoreContextProvider = (
     [tasks]
   )
 
+  const updateTask = useCallback(
+    (taskToUpdate: Task) => {
+      const updatedTasks = tasks.map((task) =>
+        task.id === taskToUpdate.id ? taskToUpdate : task
+      )
+      setTasks(updatedTasks)
+      // FIXME: try and..
+      updateTaskToServer(taskToUpdate)
+    },
+    [tasks]
+  )
+
   return (
-    <StoreContext.Provider value={{ tasks, addTask }}>
+    <StoreContext.Provider value={{ tasks, addTask, updateTask }}>
       {props.children}
     </StoreContext.Provider>
   )
 }
 
 export const useTasks = () => {
-  const { tasks, addTask } = useContext(StoreContext)
-  return { tasks, addTask }
+  const { tasks, addTask, updateTask } = useContext(StoreContext)
+  return { tasks, addTask, updateTask }
 }
 
 const startBackOnlineListener = (notSyncedTasks: Task[]) => {
