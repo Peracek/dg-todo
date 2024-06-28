@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react'
 export const OfflineNotificationBar = () => {
   const [isOnline, setIsOnline] = useState(true)
   useEffect(() => {
-    window.onoffline = () => setIsOnline(false)
-    window.ononline = () => setIsOnline(true)
+    window.addEventListener('online', () => setIsOnline(true))
+    window.addEventListener('offline', () => setIsOnline(false))
   }, [])
 
   if (isOnline) {
