@@ -29,6 +29,10 @@ To make the task a bit more challenging and educating I've implemented an offlin
 
 Here's a demo how it looks like.
 
+
+https://github.com/Peracek/dg-todo/assets/9009298/cf4769d4-7f18-41c9-8c4c-27207033b20f
+
+
 ## How to prisma
 
 ## How to run
