@@ -1,11 +1,11 @@
-import { useTasks } from '@/db/StoreContext'
+import { Task, useTasks } from '@/db/StoreContext'
 import {
   Description,
   Dialog,
   DialogPanel,
   DialogTitle,
 } from '@headlessui/react'
-import { Task } from '@prisma/client'
+
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { MdClose } from 'react-icons/md'

@@ -1,6 +1,6 @@
 'use server'
 
-import { Task } from '@prisma/client'
+import { Task } from './StoreContext'
 import prisma from './prismaClient'
 
 export const addTaskToServer = async (task: Task) =>

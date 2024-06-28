@@ -20,6 +20,7 @@ export const CreateTaskBar = ({ userId }: { userId: string }) => {
       title: data.title,
       description: data.description,
       authorId: userId,
+      isCompleted: false,
     })
     reset()
     setIsFocused(false)

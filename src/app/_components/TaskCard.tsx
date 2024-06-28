@@ -1,6 +1,5 @@
 import { MdCheckCircleOutline } from 'react-icons/md'
-import { Task } from '@prisma/client'
-import { useTasks } from '@/db/StoreContext'
+import { Task, useTasks } from '@/db/StoreContext'
 import { MouseEventHandler } from 'react'
 
 export const TaskCard = ({

@@ -1,6 +1,6 @@
 'use client'
 
-import { Task } from '@prisma/client'
+import { Task as PrismaTask } from '@prisma/client'
 import {
   PropsWithChildren,
   createContext,
@@ -16,6 +16,8 @@ import {
   updateTaskAtServer,
 } from './helpers'
 import toast from 'react-hot-toast'
+
+export type Task = Omit<PrismaTask, 'createdAt'>
 
 const StoreContext = createContext<{
   tasks: Task[]
@@ -95,7 +97,7 @@ const startBackOnlineListener = (notSyncedTasks: Task[]) => {
     if (notSyncedTasks.length > 0) {
       await syncTasksToServer(notSyncedTasks)
       // FIXME: no good, i cant change reference
-      notSyncedTasks = []
+      notSyncedTasks.splice(0)
       toast.success(
         `You're back online! All the changes you made are now safe.`
       )
