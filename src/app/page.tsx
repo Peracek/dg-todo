@@ -30,6 +30,7 @@ export default async function Home() {
 
   return (
     <StoreContextProvider tasks={tasks}>
+      {/* FIXME: move to layout */}
       <OfflineNotificationBar />
       <main className="flex min-h-screen flex-col items-center p-4">
         <UserInfo userId={user.userId} />

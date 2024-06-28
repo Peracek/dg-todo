@@ -15,6 +15,7 @@ import {
   syncTasksToServer,
   updateTaskAtServer,
 } from './helpers'
+import toast from 'react-hot-toast'
 
 const StoreContext = createContext<{
   tasks: Task[]
@@ -64,16 +65,16 @@ export const StoreContextProvider = (
       try {
         await updateTaskAtServer(taskToUpdate)
       } catch (e) {
-        debugger
         if (!navigator.onLine) {
           notSyncedTasks.current.push(taskToUpdate)
-          alert('oh shit')
-          // FIXME: notify user
-          // TODO: start listening for online
+          toast.error(
+            `You're offline. But no worries, your work will be synced when back online!`
+          )
         } else {
-          // FIXME: distinguish type of error
-          debugger
-          throw e
+          toast.error(
+            `Something went wrong 😬. Apologies for the hassle, but this app's is not being looked after. If the issue lasts for a while, you might wanna dig into another to-do list app!`
+          )
+          console.error(e)
         }
       }
     },
@@ -91,8 +92,14 @@ export const useTasks = () => useContext(StoreContext)
 
 const startBackOnlineListener = (notSyncedTasks: Task[]) => {
   window.addEventListener('online', async () => {
-    await syncTasksToServer(notSyncedTasks)
-    notSyncedTasks = []
+    if (notSyncedTasks.length > 0) {
+      await syncTasksToServer(notSyncedTasks)
+      // FIXME: no good, i cant change reference
+      notSyncedTasks = []
+      toast.success(
+        `You're back online! All the changes you made are now safe.`
+      )
+    }
   })
 }
 
