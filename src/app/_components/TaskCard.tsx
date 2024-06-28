@@ -30,10 +30,10 @@ export const TaskCard = ({
         <MdCheckCircleOutline className={`text-lg ${buttonOpracityStyle}`} />
       </button>
       <div className="whitespace-nowrap overflow-hidden">
-        <p className="mb-2 tracking-tight text-gray-900 overflow-hidden text-ellipsis">
+        <p className="tracking-tight text-gray-900 overflow-hidden text-ellipsis">
           {task.title}
         </p>
-        <p className="text-gray-700 text-sm overflow-hidden text-ellipsis">
+        <p className="pt-2 text-gray-700 text-sm overflow-hidden text-ellipsis empty:hidden">
           {task.description}
         </p>
       </div>
