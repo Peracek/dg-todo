@@ -9,7 +9,6 @@ export const TaskList = () => {
   const [openedTask, setOpenedTask] = useState<Task | undefined>()
   const { tasks } = useTasks()
   const closeDialog = () => setOpenedTask(undefined)
-
   return (
     <>
       <div className="w-56 flex flex-col items-stretch gap-1">

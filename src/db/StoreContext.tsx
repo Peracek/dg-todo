@@ -19,6 +19,10 @@ import toast from 'react-hot-toast'
 
 export type Task = Omit<PrismaTask, 'createdAt'>
 
+const offlineMsg = `You're offline. But no worries, your work will be synced when back online!`
+const backOnlineMsg = `You're back online! All the changes you made are now safe.`
+const unknownErrorMsg = `Something went wrong 😬. Apologies for the hassle, but this app's is not being looked after. If the issue lasts for a while, you might wanna dig into another to-do list app!`
+
 const StoreContext = createContext<{
   tasks: Task[]
   addTask: (task: Task) => void
@@ -39,19 +43,15 @@ export const StoreContextProvider = (
   const addTask = useCallback(
     async (taskToAdd: Task) => {
       setTasks([taskToAdd, ...tasks])
-      // TODO: update db
       try {
         await addTaskToServer(taskToAdd)
       } catch (e) {
         if (!navigator.onLine) {
           notSyncedTasks.current.push(taskToAdd)
-          alert('oh shit')
-          // FIXME: notify user
-          // TODO: start listening for online
+          toast.error(offlineMsg)
         } else {
-          // FIXME: distinguish type of error
-          debugger
-          throw e
+          toast.error(unknownErrorMsg)
+          console.error(e)
         }
       }
     },
@@ -69,13 +69,9 @@ export const StoreContextProvider = (
       } catch (e) {
         if (!navigator.onLine) {
           notSyncedTasks.current.push(taskToUpdate)
-          toast.error(
-            `You're offline. But no worries, your work will be synced when back online!`
-          )
+          toast.error(offlineMsg)
         } else {
-          toast.error(
-            `Something went wrong 😬. Apologies for the hassle, but this app's is not being looked after. If the issue lasts for a while, you might wanna dig into another to-do list app!`
-          )
+          toast.error(unknownErrorMsg)
           console.error(e)
         }
       }
@@ -96,22 +92,17 @@ const startBackOnlineListener = (notSyncedTasks: Task[]) => {
   window.ononline = async () => {
     if (notSyncedTasks.length > 0) {
       await syncTasksToServer(notSyncedTasks)
-      // FIXME: no good, i cant change reference
       notSyncedTasks.splice(0)
-      toast.success(
-        `You're back online! All the changes you made are now safe.`
-      )
+      toast.success(backOnlineMsg)
     }
   }
 }
 
 const startUnloadListener = (notSyncedTasks: Task[]) => {
-  // FIXME: window.onbeforeunload
   window.addEventListener('beforeunload', (event) => {
     const anyPendingTasks = notSyncedTasks.length > 0
     if (anyPendingTasks) {
-      // FIXME: fix deprecated
-      event.returnValue = `Are you sure you want to leave?`
+      event.preventDefault()
     }
   })
 }
