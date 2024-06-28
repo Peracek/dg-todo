@@ -10,8 +10,11 @@ import {
   useRef,
   useState,
 } from 'react'
-import { addTaskToServer } from './addTaskToServer'
-import { updateTaskToServer } from './updateTaskToServer'
+import {
+  addTaskToServer,
+  syncTasksToServer,
+  updateTaskAtServer,
+} from './helpers'
 
 const StoreContext = createContext<{
   tasks: Task[]
@@ -53,13 +56,26 @@ export const StoreContextProvider = (
   )
 
   const updateTask = useCallback(
-    (taskToUpdate: Task) => {
+    async (taskToUpdate: Task) => {
       const updatedTasks = tasks.map((task) =>
         task.id === taskToUpdate.id ? taskToUpdate : task
       )
       setTasks(updatedTasks)
-      // FIXME: try and..
-      updateTaskToServer(taskToUpdate)
+      try {
+        await updateTaskAtServer(taskToUpdate)
+      } catch (e) {
+        debugger
+        if (!navigator.onLine) {
+          notSyncedTasks.current.push(taskToUpdate)
+          alert('oh shit')
+          // FIXME: notify user
+          // TODO: start listening for online
+        } else {
+          // FIXME: distinguish type of error
+          debugger
+          throw e
+        }
+      }
     },
     [tasks]
   )
@@ -71,14 +87,11 @@ export const StoreContextProvider = (
   )
 }
 
-export const useTasks = () => {
-  const { tasks, addTask, updateTask } = useContext(StoreContext)
-  return { tasks, addTask, updateTask }
-}
+export const useTasks = () => useContext(StoreContext)
 
 const startBackOnlineListener = (notSyncedTasks: Task[]) => {
   window.addEventListener('online', async () => {
-    await addTaskToServer(notSyncedTasks)
+    await syncTasksToServer(notSyncedTasks)
     notSyncedTasks = []
   })
 }
@@ -87,6 +100,7 @@ const startUnloadListener = (notSyncedTasks: Task[]) => {
   window.addEventListener('beforeunload', (event) => {
     const anyPendingTasks = notSyncedTasks.length > 0
     if (anyPendingTasks) {
+      // FIXME: fix deprecated
       event.returnValue = `Are you sure you want to leave?`
     }
   })
