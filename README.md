@@ -4,7 +4,10 @@ Welcome! This a simple TODO list app created as a test tasks to show my coding s
 
 Technologies used: TypeScript, Next.js, Tailwind, Prisma + PostgreSQL, pnpm.
 
-> [!NOTE] The only authentication method is using GitHub OAuth.
+> [!NOTE]
+> The only authentication method is using GitHub OAuth.
+
+## [See live demo](https://dg-todo.vercel.app/)
 
 ## Requirements
 
@@ -37,7 +40,11 @@ https://github.com/Peracek/dg-todo/assets/9009298/cf4769d4-7f18-41c9-8c4c-272070
 
 ## How to run
 
-First you need to create your .env file. Create a copy of `.env.development.example` and name it `.env.development.local`. Fill your own variables.
+First you need to create your .env file. Fill your own variables.
+
+```bash
+cp .env.development.example .env.development.local
+```
 
 Run the development server.
 
