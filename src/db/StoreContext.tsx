@@ -32,7 +32,7 @@ export const StoreContextProvider = (
 
   const addTask = useCallback(
     async (taskToAdd: Task) => {
-      setTasks([...tasks, taskToAdd])
+      setTasks([taskToAdd, ...tasks])
       // TODO: update db
       try {
         await addTaskToServer(taskToAdd)

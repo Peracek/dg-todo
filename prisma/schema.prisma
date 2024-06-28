@@ -14,8 +14,10 @@ datasource db {
 }
 
 model Task {
-  id          String  @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
   description String
-  authorId    String?
+  authorId    String
+  createdAt   DateTime @default(now())
+  isCompleted Boolean  @default(false)
 }

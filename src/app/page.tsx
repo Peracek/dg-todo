@@ -14,10 +14,13 @@ const getUser = async () => {
   return { userId: email }
 }
 
-const getTasks = async (userId: string | null) =>
+const getTasks = async (userId: string) =>
   prisma.task.findMany({
     where: {
       authorId: userId,
+    },
+    orderBy: {
+      createdAt: 'desc',
     },
   })
 
